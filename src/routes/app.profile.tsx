@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Briefcase, CreditCard, Home, MapPin, Plus } from "lucide-react";
+import { Briefcase, CreditCard, Home, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 
