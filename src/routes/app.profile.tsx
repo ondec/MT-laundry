@@ -119,7 +119,7 @@ function Section({ title, action, children }: { title: string; action?: React.Re
         <h3 className="font-display font-semibold">{title}</h3>
         {action}
       </div>
-      <MapPin className="hidden" />
+      
       <div className="space-y-2">{children}</div>
     </div>
   );
