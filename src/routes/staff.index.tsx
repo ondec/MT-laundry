@@ -3,6 +3,8 @@ import { Clock } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Avatar } from "@/components/avatar";
 import { formatDateTime, formatMoney2, orders } from "@/mocks/data";
+import { useTenantBrand } from "@/lib/tenant-brand";
+import { STAFF_BRANCH_INDEX } from "@/lib/staff-context";
 import type { OrderStatus } from "@/types";
 
 export const Route = createFileRoute("/staff/")({
@@ -20,16 +22,19 @@ const columns: { id: OrderStatus; label: string; accent: string }[] = [
 ];
 
 function StaffQueue() {
+  const { tenant } = useTenantBrand();
+  const branch = tenant.branches[STAFF_BRANCH_INDEX] ?? tenant.branches[0];
+  const branchOrders = orders.filter((o) => o.branchIndex === STAFF_BRANCH_INDEX);
   return (
     <div className="space-y-5">
       <PageHeader
         title="Today's queue"
-        subtitle={`${orders.length} active tickets · drag through the stages`}
+        subtitle={`${branchOrders.length} active tickets at ${branch.name} · drag through the stages`}
       />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {columns.map((col) => {
-          const items = orders.filter((o) => o.status === col.id);
+          const items = branchOrders.filter((o) => o.status === col.id);
           return (
             <div key={col.id} className="rounded-2xl border border-border bg-card flex flex-col min-h-[420px]">
               <div className="flex items-center justify-between px-3 py-3 border-b border-border">
