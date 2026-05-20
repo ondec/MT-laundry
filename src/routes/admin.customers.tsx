@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { Download, Plus } from "lucide-react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/page-header";
 import { StatusPill } from "@/components/status-pill";
 import { Avatar } from "@/components/avatar";
 import { customers, formatDate, formatMoney2 } from "@/mocks/data";
+import { downloadCSV } from "@/lib/csv";
 
 export const Route = createFileRoute("/admin/customers")({
   head: () => ({ meta: [{ title: "Customers · Sparkle Wash" }] }),
@@ -11,15 +13,37 @@ export const Route = createFileRoute("/admin/customers")({
 });
 
 function CustomersPage() {
+  const exportCsv = () => {
+    downloadCSV(
+      `customers-${new Date().toISOString().slice(0, 10)}.csv`,
+      customers.map((c) => ({
+        name: c.name,
+        email: c.email,
+        phone: c.phone,
+        joined: c.joinedAt,
+        orders: c.totalOrders,
+        lifetime_spend: c.totalSpent,
+        points: c.loyaltyPoints,
+        tier: c.tier,
+      })),
+    );
+    toast.success(`Exported ${customers.length} customers`);
+  };
+
   return (
     <div className="space-y-5">
       <PageHeader
         title="Customers"
         subtitle={`${customers.length} active accounts`}
         actions={
-          <button className="inline-flex items-center gap-1.5 rounded-full bg-ink text-ink-foreground px-3 py-2 text-sm hover:opacity-90">
-            <Plus className="size-4" /> Add customer
-          </button>
+          <>
+            <button onClick={exportCsv} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-sm hover:bg-muted">
+              <Download className="size-4" /> Export
+            </button>
+            <button className="inline-flex items-center gap-1.5 rounded-full bg-ink text-ink-foreground px-3 py-2 text-sm hover:opacity-90">
+              <Plus className="size-4" /> Add customer
+            </button>
+          </>
         }
       />
 

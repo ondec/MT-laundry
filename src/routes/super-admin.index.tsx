@@ -44,6 +44,39 @@ function SuperOverview() {
         </div>
       </div>
 
+      {/* Plan usage meters */}
+      <div className="rounded-2xl border border-border bg-card p-5">
+        <h3 className="font-display font-semibold text-lg">Plan usage</h3>
+        <p className="text-xs text-muted-foreground mb-4">Monthly order volume vs plan cap. Flagged tenants are over their allowance.</p>
+        <div className="space-y-3">
+          {tenants.map((t) => {
+            const cap = t.plan === "starter" ? 100 : t.plan === "growth" ? 500 : 1500;
+            const pct = Math.min(100, Math.round((t.monthlyOrders / cap) * 100));
+            const over = t.monthlyOrders > cap;
+            return (
+              <div key={t.id} className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)_auto] items-center gap-3">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="size-6 rounded-md grid place-items-center text-[10px] font-semibold" style={{ background: t.brand.accent, color: t.brand.accentForeground }}>
+                    {t.brand.logoInitial}
+                  </span>
+                  <span className="text-sm font-medium truncate">{t.name}</span>
+                  <span className="text-[10px] text-muted-foreground capitalize">· {t.plan}</span>
+                </div>
+                <div className="h-2 rounded-full bg-muted overflow-hidden">
+                  <div
+                    className={`h-full rounded-full ${over ? "bg-destructive" : pct > 80 ? "bg-warning" : "bg-primary"}`}
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+                <div className="text-xs tabular-nums text-muted-foreground whitespace-nowrap">
+                  {t.monthlyOrders} / {cap}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="rounded-2xl border border-border bg-card">
         <div className="p-5 pb-3">
           <h3 className="font-display font-semibold text-lg">Recent tenants</h3>

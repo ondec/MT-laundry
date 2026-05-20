@@ -1,5 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Check } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, Check, QrCode } from "lucide-react";
+import { toast } from "sonner";
 import { Avatar } from "@/components/avatar";
 import { StatusPill } from "@/components/status-pill";
 import { formatDateTime, formatMoney2, orders } from "@/mocks/data";
@@ -17,7 +19,25 @@ function TicketDetail() {
   const { orderId } = Route.useParams();
   const order = orders.find((o) => o.id === orderId);
   if (!order) throw notFound();
-  const currentIdx = flow.indexOf(order.status);
+  const initialIdx = flow.indexOf(order.status);
+  const [currentIdx, setCurrentIdx] = useState(initialIdx);
+
+  const advance = () => {
+    if (currentIdx >= flow.length - 1) {
+      toast("Order already delivered");
+      return;
+    }
+    const next = flow[currentIdx + 1];
+    setCurrentIdx(currentIdx + 1);
+    toast.success(`Moved to ${next}`, { description: order.code });
+  };
+
+  const scan = () => {
+    toast.success("QR scanned", {
+      description: `Auto-advanced ${order.code}`,
+    });
+    advance();
+  };
 
   return (
     <div className="space-y-5 max-w-4xl">
@@ -73,8 +93,14 @@ function TicketDetail() {
         )}
 
         <div className="mt-6 flex flex-wrap gap-2">
-          <button className="rounded-full bg-ink text-ink-foreground px-4 py-2 text-sm">Advance stage</button>
-          <button className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">Add note</button>
+          <button
+            onClick={scan}
+            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm hover:opacity-90"
+          >
+            <QrCode className="size-4" /> Scan QR
+          </button>
+          <button onClick={advance} className="rounded-full bg-ink text-ink-foreground px-4 py-2 text-sm">Advance stage</button>
+          <button onClick={() => toast("Note panel coming next")} className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">Add note</button>
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import { KpiCard } from "@/components/kpi-card";
 import { PeriodSwitcher } from "@/components/period-switcher";
 import { StatusPill } from "@/components/status-pill";
 import { Avatar } from "@/components/avatar";
+import { Sparkline } from "@/components/branch-sparkline";
 import {
   formatMoney,
   formatMoney2,
@@ -25,7 +26,7 @@ import {
   revenueByYear,
   staff,
 } from "@/mocks/data";
-import { useBranchScope } from "@/lib/tenant-brand";
+import { useBranchScope, useTenantBrand } from "@/lib/tenant-brand";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({ meta: [{ title: "Dashboard · Sparkle Wash" }] }),
@@ -44,6 +45,7 @@ function AdminDashboard() {
   const data = periodData[period];
   const max = useMemo(() => Math.max(...data.map((d) => d.value)), [data]);
   const { activeBranch, filterByBranch } = useBranchScope();
+  const { tenant, setActiveBranchId } = useTenantBrand();
 
   const scopedOrders = useMemo(() => filterByBranch(orders), [filterByBranch]);
   const scopedStaff = useMemo(() => filterByBranch(staff), [filterByBranch]);
@@ -51,6 +53,17 @@ function AdminDashboard() {
     () => scopedOrders.reduce((s, o) => s + o.amount, 0),
     [scopedOrders],
   );
+
+  // Per-branch sparkline series (deterministic mock based on branch index)
+  const branchSeries = tenant.branches.map((b, idx) => {
+    const base = 800 + idx * 280;
+    return {
+      branch: b,
+      values: Array.from({ length: 7 }, (_, i) => Math.round(base + Math.sin((i + idx) * 1.3) * 220 + i * 35)),
+      revenue: orders.filter((o) => o.branchIndex === idx).reduce((s, o) => s + o.amount, 0),
+      orders: orders.filter((o) => o.branchIndex === idx).length,
+    };
+  });
 
   return (
     <div className="space-y-5">
@@ -75,6 +88,39 @@ function AdminDashboard() {
         <KpiCard label="New Customers" value="148" delta={-2.9} icon={<UserPlus className="size-4" />} />
         <KpiCard label={activeBranch ? "Branch Staff" : "Total Staff"} value={String(scopedStaff.length)} delta={0.9} icon={<UsersRound className="size-4" />} />
       </div>
+
+      {/* Per-branch sparkline strip */}
+      <div className="rounded-2xl border border-border bg-card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="font-display font-semibold text-lg">Branch performance</h3>
+            <p className="text-xs text-muted-foreground">Revenue trend, last 7 days · click to focus</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {branchSeries.map((b) => {
+            const isActive = activeBranch?.id === b.branch.id;
+            return (
+              <button
+                key={b.branch.id}
+                onClick={() => setActiveBranchId(isActive ? "all" : b.branch.id)}
+                className={`text-left rounded-xl border p-4 transition ${
+                  isActive ? "border-primary bg-primary/5" : "border-border hover:border-foreground/30"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="font-medium text-sm truncate">{b.branch.name}</div>
+                    <div className="text-[11px] text-muted-foreground mt-0.5">{b.orders} orders · {formatMoney2(b.revenue)}</div>
+                  </div>
+                  <Sparkline values={b.values} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
 
       {/* Chart + side widgets */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
