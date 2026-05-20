@@ -93,8 +93,14 @@ function TicketDetail() {
         )}
 
         <div className="mt-6 flex flex-wrap gap-2">
-          <button className="rounded-full bg-ink text-ink-foreground px-4 py-2 text-sm">Advance stage</button>
-          <button className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">Add note</button>
+          <button
+            onClick={scan}
+            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm hover:opacity-90"
+          >
+            <QrCode className="size-4" /> Scan QR
+          </button>
+          <button onClick={advance} className="rounded-full bg-ink text-ink-foreground px-4 py-2 text-sm">Advance stage</button>
+          <button onClick={() => toast("Note panel coming next")} className="rounded-full border border-border px-4 py-2 text-sm hover:bg-muted">Add note</button>
         </div>
       </div>
     </div>
