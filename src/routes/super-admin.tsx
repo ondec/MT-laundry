@@ -17,11 +17,12 @@ const nav: NavItem[] = [
 function SuperLayout() {
   return (
     <AppShell
-      brand={{ name: "Sudsly HQ", tagline: "Platform admin" }}
+      brand={{ name: "Sudsly HQ", tagline: "Platform admin", logoInitial: "S" }}
       nav={nav}
       userName="Alex Vega"
       userRole="Platform admin"
       searchPlaceholder="Search tenants, plans…"
+      showTenantSwitcher={false}
       promo={{
         title: "Onboard a tenant",
         body: "Walk a new laundromat through setup, plan and branding in one wizard.",

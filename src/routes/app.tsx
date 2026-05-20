@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Gift, Home, PackagePlus, ScrollText, User } from "lucide-react";
 import { AppShell, type NavItem } from "@/components/app-shell";
+import { TenantBrandProvider, useTenantBrand } from "@/lib/tenant-brand";
 
 export const Route = createFileRoute("/app")({
   component: CustomerLayout,
@@ -14,10 +15,15 @@ const nav: NavItem[] = [
   { to: "/app/profile", label: "Profile", icon: User },
 ];
 
-function CustomerLayout() {
+function CustomerLayoutInner() {
+  const { tenant } = useTenantBrand();
   return (
     <AppShell
-      brand={{ name: "Sparkle", tagline: "Customer app" }}
+      brand={{
+        name: tenant.brand.customerAppName,
+        tagline: "Customer app",
+        logoInitial: tenant.brand.logoInitial,
+      }}
       nav={nav}
       userName="Liam Daniel"
       userRole="Silver member"
@@ -30,5 +36,13 @@ function CustomerLayout() {
         href: "/app/loyalty",
       }}
     />
+  );
+}
+
+function CustomerLayout() {
+  return (
+    <TenantBrandProvider>
+      <CustomerLayoutInner />
+    </TenantBrandProvider>
   );
 }

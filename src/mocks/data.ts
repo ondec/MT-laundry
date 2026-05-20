@@ -122,13 +122,20 @@ export const revenueByYear: RevenuePoint[] = [
 ];
 
 export const tenants: Tenant[] = [
-  { id: "t-1", name: "Sparkle Wash", plan: "scale", status: "active", city: "Brooklyn, NY", ownerName: "Maretta Daniel", ownerEmail: "maretta@sparkle.co", createdAt: "2024-02-12", monthlyOrders: 412, monthlyRevenue: 23902 },
-  { id: "t-2", name: "Foam & Fold", plan: "growth", status: "active", city: "Austin, TX", ownerName: "Carlos Vega", ownerEmail: "carlos@foamfold.com", createdAt: "2024-05-04", monthlyOrders: 268, monthlyRevenue: 14820 },
-  { id: "t-3", name: "Tide Cleaners", plan: "growth", status: "active", city: "Seattle, WA", ownerName: "Hana Ito", ownerEmail: "hana@tide.io", createdAt: "2024-07-19", monthlyOrders: 198, monthlyRevenue: 11200 },
-  { id: "t-4", name: "Bubble Bros", plan: "starter", status: "trial", city: "Denver, CO", ownerName: "Marcus Reed", ownerEmail: "m.reed@bubblebros.co", createdAt: "2025-04-22", monthlyOrders: 42, monthlyRevenue: 1980 },
-  { id: "t-5", name: "Pristine Linens", plan: "scale", status: "active", city: "Chicago, IL", ownerName: "Sofia Russo", ownerEmail: "sofia@pristine.com", createdAt: "2023-11-08", monthlyOrders: 521, monthlyRevenue: 31400 },
-  { id: "t-6", name: "Crisp Co.", plan: "starter", status: "suspended", city: "Miami, FL", ownerName: "Diego Ortiz", ownerEmail: "diego@crisp.fl", createdAt: "2024-01-30", monthlyOrders: 0, monthlyRevenue: 0 },
-  { id: "t-7", name: "Linen Lab", plan: "growth", status: "active", city: "Portland, OR", ownerName: "Avery Quinn", ownerEmail: "avery@linenlab.co", createdAt: "2024-09-14", monthlyOrders: 184, monthlyRevenue: 9600 },
+  { id: "t-1", name: "Sparkle Wash", plan: "scale", status: "active", city: "Brooklyn, NY", ownerName: "Maretta Daniel", ownerEmail: "maretta@sparkle.co", createdAt: "2024-02-12", monthlyOrders: 412, monthlyRevenue: 23902,
+    brand: { logoInitial: "SW", accent: "#2563eb", accentForeground: "#ffffff", customerAppName: "Sparkle", tagline: "Brooklyn's everyday clean", subdomain: "sparkle" } },
+  { id: "t-2", name: "Foam & Fold", plan: "growth", status: "active", city: "Austin, TX", ownerName: "Carlos Vega", ownerEmail: "carlos@foamfold.com", createdAt: "2024-05-04", monthlyOrders: 268, monthlyRevenue: 14820,
+    brand: { logoInitial: "FF", accent: "#16a34a", accentForeground: "#ffffff", customerAppName: "Foam", tagline: "Austin wash & fold", subdomain: "foamfold" } },
+  { id: "t-3", name: "Tide Cleaners", plan: "growth", status: "active", city: "Seattle, WA", ownerName: "Hana Ito", ownerEmail: "hana@tide.io", createdAt: "2024-07-19", monthlyOrders: 198, monthlyRevenue: 11200,
+    brand: { logoInitial: "TC", accent: "#0891b2", accentForeground: "#ffffff", customerAppName: "Tide", tagline: "Pacific Northwest care", subdomain: "tide" } },
+  { id: "t-4", name: "Bubble Bros", plan: "starter", status: "trial", city: "Denver, CO", ownerName: "Marcus Reed", ownerEmail: "m.reed@bubblebros.co", createdAt: "2025-04-22", monthlyOrders: 42, monthlyRevenue: 1980,
+    brand: { logoInitial: "BB", accent: "#9333ea", accentForeground: "#ffffff", customerAppName: "Bubble", tagline: "Mile-high laundry", subdomain: "bubblebros" } },
+  { id: "t-5", name: "Pristine Linens", plan: "scale", status: "active", city: "Chicago, IL", ownerName: "Sofia Russo", ownerEmail: "sofia@pristine.com", createdAt: "2023-11-08", monthlyOrders: 521, monthlyRevenue: 31400,
+    brand: { logoInitial: "PL", accent: "#0d0d0d", accentForeground: "#ffffff", customerAppName: "Pristine", tagline: "Hotel-grade linen service", subdomain: "pristine" } },
+  { id: "t-6", name: "Crisp Co.", plan: "starter", status: "suspended", city: "Miami, FL", ownerName: "Diego Ortiz", ownerEmail: "diego@crisp.fl", createdAt: "2024-01-30", monthlyOrders: 0, monthlyRevenue: 0,
+    brand: { logoInitial: "CC", accent: "#dc2626", accentForeground: "#ffffff", customerAppName: "Crisp", tagline: "Miami press & fold", subdomain: "crisp" } },
+  { id: "t-7", name: "Linen Lab", plan: "growth", status: "active", city: "Portland, OR", ownerName: "Avery Quinn", ownerEmail: "avery@linenlab.co", createdAt: "2024-09-14", monthlyOrders: 184, monthlyRevenue: 9600,
+    brand: { logoInitial: "LL", accent: "#d97706", accentForeground: "#ffffff", customerAppName: "Linen", tagline: "Portland fabric care", subdomain: "linenlab" } },
 ];
 
 export const currentTenant = tenants[0];
