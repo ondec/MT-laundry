@@ -37,6 +37,7 @@ import { Route as AdminInvoicesRouteImport } from './routes/admin.invoices'
 import { Route as AdminInventoryRouteImport } from './routes/admin.inventory'
 import { Route as AdminFinanceRouteImport } from './routes/admin.finance'
 import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
+import { Route as AdminBrandingRouteImport } from './routes/admin.branding'
 import { Route as StaffOrdersOrderIdRouteImport } from './routes/staff.orders.$orderId'
 import { Route as AppOrdersOrderIdRouteImport } from './routes/app.orders.$orderId'
 
@@ -180,6 +181,11 @@ const AdminCustomersRoute = AdminCustomersRouteImport.update({
   path: '/customers',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminBrandingRoute = AdminBrandingRouteImport.update({
+  id: '/branding',
+  path: '/branding',
+  getParentRoute: () => AdminRoute,
+} as any)
 const StaffOrdersOrderIdRoute = StaffOrdersOrderIdRouteImport.update({
   id: '/orders/$orderId',
   path: '/orders/$orderId',
@@ -197,6 +203,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/staff': typeof StaffRouteWithChildren
   '/super-admin': typeof SuperAdminRouteWithChildren
+  '/admin/branding': typeof AdminBrandingRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/finance': typeof AdminFinanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
@@ -225,6 +232,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/branding': typeof AdminBrandingRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/finance': typeof AdminFinanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
@@ -258,6 +266,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/staff': typeof StaffRouteWithChildren
   '/super-admin': typeof SuperAdminRouteWithChildren
+  '/admin/branding': typeof AdminBrandingRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/finance': typeof AdminFinanceRoute
   '/admin/inventory': typeof AdminInventoryRoute
@@ -292,6 +301,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/staff'
     | '/super-admin'
+    | '/admin/branding'
     | '/admin/customers'
     | '/admin/finance'
     | '/admin/inventory'
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin/branding'
     | '/admin/customers'
     | '/admin/finance'
     | '/admin/inventory'
@@ -352,6 +363,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/staff'
     | '/super-admin'
+    | '/admin/branding'
     | '/admin/customers'
     | '/admin/finance'
     | '/admin/inventory'
@@ -585,6 +597,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCustomersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/branding': {
+      id: '/admin/branding'
+      path: '/branding'
+      fullPath: '/admin/branding'
+      preLoaderRoute: typeof AdminBrandingRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/staff/orders/$orderId': {
       id: '/staff/orders/$orderId'
       path: '/orders/$orderId'
@@ -603,6 +622,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminBrandingRoute: typeof AdminBrandingRoute
   AdminCustomersRoute: typeof AdminCustomersRoute
   AdminFinanceRoute: typeof AdminFinanceRoute
   AdminInventoryRoute: typeof AdminInventoryRoute
@@ -616,6 +636,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminBrandingRoute: AdminBrandingRoute,
   AdminCustomersRoute: AdminCustomersRoute,
   AdminFinanceRoute: AdminFinanceRoute,
   AdminInventoryRoute: AdminInventoryRoute,

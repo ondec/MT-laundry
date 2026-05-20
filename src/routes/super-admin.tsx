@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Building2, LayoutDashboard, Receipt, Settings, Sparkles } from "lucide-react";
 import { AppShell, type NavItem } from "@/components/app-shell";
+import { TenantBrandProvider } from "@/lib/tenant-brand";
 
 export const Route = createFileRoute("/super-admin")({
   component: SuperLayout,
@@ -16,18 +17,21 @@ const nav: NavItem[] = [
 
 function SuperLayout() {
   return (
-    <AppShell
-      brand={{ name: "Sudsly HQ", tagline: "Platform admin" }}
-      nav={nav}
-      userName="Alex Vega"
-      userRole="Platform admin"
-      searchPlaceholder="Search tenants, plans…"
-      promo={{
-        title: "Onboard a tenant",
-        body: "Walk a new laundromat through setup, plan and branding in one wizard.",
-        cta: "Start",
-        href: "/super-admin/tenants",
-      }}
-    />
+    <TenantBrandProvider>
+      <AppShell
+        brand={{ name: "Sudsly HQ", tagline: "Platform admin", logoInitial: "S" }}
+        nav={nav}
+        userName="Alex Vega"
+        userRole="Platform admin"
+        searchPlaceholder="Search tenants, plans…"
+        showTenantSwitcher={false}
+        promo={{
+          title: "Onboard a tenant",
+          body: "Walk a new laundromat through setup, plan and branding in one wizard.",
+          cta: "Start",
+          href: "/super-admin/tenants",
+        }}
+      />
+    </TenantBrandProvider>
   );
 }
