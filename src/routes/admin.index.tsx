@@ -137,7 +137,7 @@ function AdminDashboard() {
               </tr>
             </thead>
             <tbody>
-              {orders.slice(0, 7).map((o) => (
+              {scopedOrders.slice(0, 7).map((o) => (
                 <tr key={o.id} className="border-b border-border last:border-0 hover:bg-muted/30">
                   <td className="px-5 py-3 font-medium">{o.code}</td>
                   <td className="px-5 py-3">
