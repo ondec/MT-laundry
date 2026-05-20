@@ -1,5 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Check } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, Check, QrCode } from "lucide-react";
+import { toast } from "sonner";
 import { Avatar } from "@/components/avatar";
 import { StatusPill } from "@/components/status-pill";
 import { formatDateTime, formatMoney2, orders } from "@/mocks/data";
@@ -17,7 +19,25 @@ function TicketDetail() {
   const { orderId } = Route.useParams();
   const order = orders.find((o) => o.id === orderId);
   if (!order) throw notFound();
-  const currentIdx = flow.indexOf(order.status);
+  const initialIdx = flow.indexOf(order.status);
+  const [currentIdx, setCurrentIdx] = useState(initialIdx);
+
+  const advance = () => {
+    if (currentIdx >= flow.length - 1) {
+      toast("Order already delivered");
+      return;
+    }
+    const next = flow[currentIdx + 1];
+    setCurrentIdx(currentIdx + 1);
+    toast.success(`Moved to ${next}`, { description: order.code });
+  };
+
+  const scan = () => {
+    toast.success("QR scanned", {
+      description: `Auto-advanced ${order.code}`,
+    });
+    advance();
+  };
 
   return (
     <div className="space-y-5 max-w-4xl">
