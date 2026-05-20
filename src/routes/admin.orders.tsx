@@ -32,7 +32,7 @@ function OrdersPage() {
     <div className="space-y-5">
       <PageHeader
         title="Orders"
-        subtitle={`${filtered.length} tickets`}
+        subtitle={`${filtered.length} tickets${activeBranch ? ` · ${activeBranch.name}` : " · all branches"}`}
         actions={
           <>
             <button className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-sm hover:bg-muted">
