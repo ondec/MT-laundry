@@ -3,6 +3,7 @@ import {
   BarChart3,
   Boxes,
   LayoutDashboard,
+  Palette,
   Receipt,
   Settings,
   ShoppingBag,
@@ -12,6 +13,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { AppShell, type NavItem } from "@/components/app-shell";
+import { TenantBrandProvider, useTenantBrand } from "@/lib/tenant-brand";
 
 export const Route = createFileRoute("/admin")({
   component: AdminLayout,
@@ -27,15 +29,16 @@ const nav: NavItem[] = [
   { to: "/admin/finance", label: "Finance", icon: Wallet },
   { to: "/admin/reports", label: "Reports", icon: BarChart3 },
   { to: "/admin/invoices", label: "Invoices", icon: Receipt },
+  { to: "/admin/branding", label: "Branding", icon: Palette },
   { to: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
-function AdminLayout() {
+function AdminLayoutInner() {
+  const { tenant } = useTenantBrand();
   return (
     <AppShell
-      brand={{ name: "Sparkle Wash", tagline: "Tenant admin" }}
       nav={nav}
-      userName="Maretta Daniel"
+      userName={tenant.ownerName}
       userRole="Owner"
       promo={{
         title: "Upgrade to Scale",
@@ -45,5 +48,13 @@ function AdminLayout() {
       }}
       searchPlaceholder="Search orders, customers…"
     />
+  );
+}
+
+function AdminLayout() {
+  return (
+    <TenantBrandProvider>
+      <AdminLayoutInner />
+    </TenantBrandProvider>
   );
 }
