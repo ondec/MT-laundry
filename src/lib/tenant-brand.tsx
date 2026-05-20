@@ -66,6 +66,11 @@ export function TenantBrandProvider({ children }: { children: ReactNode }) {
 
 export function useTenantBrand() {
   const ctx = useContext(BrandContext);
-  if (!ctx) throw new Error("useTenantBrand must be used inside <TenantBrandProvider>");
-  return ctx;
+  if (ctx) return ctx;
+  // Fallback for shells outside a provider — used by Super Admin etc.
+  return {
+    tenant: tenants[0],
+    setActiveTenantId: () => {},
+    allTenants: tenants,
+  };
 }
