@@ -1,0 +1,130 @@
+import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { Bell, Calendar, Search, type LucideIcon } from "lucide-react";
+import { Avatar } from "@/components/avatar";
+import { cn } from "@/lib/utils";
+
+export interface NavItem {
+  to: string;
+  label: string;
+  icon: LucideIcon;
+  exact?: boolean;
+}
+
+interface AppShellProps {
+  brand: { name: string; tagline?: string };
+  nav: NavItem[];
+  userName: string;
+  userRole: string;
+  promo?: {
+    title: string;
+    body: string;
+    cta: string;
+    href: string;
+  };
+  searchPlaceholder?: string;
+  showDateRange?: boolean;
+  topBar?: React.ReactNode;
+}
+
+export function AppShell({
+  brand,
+  nav,
+  userName,
+  userRole,
+  promo,
+  searchPlaceholder = "Search…",
+  showDateRange = true,
+  topBar,
+}: AppShellProps) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  return (
+    <div className="min-h-screen bg-background p-3 lg:p-4 flex gap-4">
+      {/* Sidebar */}
+      <aside className="hidden md:flex w-60 shrink-0 flex-col rounded-2xl bg-card border border-border p-4">
+        <Link to="/" className="px-2 mb-7 mt-1">
+          <div className="font-display text-xl font-semibold tracking-tight">{brand.name}</div>
+          {brand.tagline && <div className="text-xs text-muted-foreground mt-0.5">{brand.tagline}</div>}
+        </Link>
+
+        <nav className="flex flex-col gap-0.5">
+          {nav.map((item) => {
+            const active = item.exact ? pathname === item.to : pathname === item.to || pathname.startsWith(item.to + "/");
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors",
+                  active
+                    ? "bg-ink text-ink-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
+              >
+                <Icon className="size-4" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="mt-auto">
+          {promo && (
+            <div className="rounded-2xl bg-ink text-ink-foreground p-4 mt-4">
+              <div className="font-display font-semibold text-sm">{promo.title}</div>
+              <p className="text-xs text-ink-foreground/70 mt-1 leading-relaxed">{promo.body}</p>
+              <Link
+                to={promo.href}
+                className="mt-3 inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-medium hover:opacity-90"
+              >
+                {promo.cta}
+              </Link>
+            </div>
+          )}
+        </div>
+      </aside>
+
+      {/* Main column */}
+      <div className="flex-1 min-w-0 flex flex-col gap-4">
+        {/* Top bar */}
+        <header className="rounded-2xl bg-card border border-border px-4 py-3 flex items-center gap-3">
+          <div className="flex-1 flex items-center gap-3 min-w-0">
+            <div className="relative flex-1 max-w-md hidden sm:block">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder={searchPlaceholder}
+                className="w-full bg-muted rounded-full pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30 placeholder:text-muted-foreground"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {topBar}
+            {showDateRange && (
+              <button className="hidden lg:inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground">
+                <Calendar className="size-3.5" />
+                1 Sep – 30 Sep 2025
+              </button>
+            )}
+            <button className="size-9 rounded-full border border-border grid place-items-center hover:bg-muted">
+              <Bell className="size-4" />
+            </button>
+            <div className="flex items-center gap-2 pl-2">
+              <Avatar seed={userName} size={36} />
+              <div className="hidden lg:block">
+                <div className="text-sm font-medium leading-tight">{userName}</div>
+                <div className="text-xs text-muted-foreground leading-tight">{userRole}</div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 min-w-0">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+}
