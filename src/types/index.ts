@@ -1,0 +1,106 @@
+export type OrderStatus =
+  | "received"
+  | "washing"
+  | "drying"
+  | "folding"
+  | "ready"
+  | "delivered"
+  | "cancelled";
+
+export type ServiceType = "wash_fold" | "dry_clean" | "ironing" | "premium" | "shoes" | "bedding";
+
+export interface Tenant {
+  id: string;
+  name: string;
+  plan: "starter" | "growth" | "scale";
+  status: "active" | "trial" | "suspended";
+  city: string;
+  ownerName: string;
+  ownerEmail: string;
+  createdAt: string;
+  monthlyOrders: number;
+  monthlyRevenue: number;
+}
+
+export interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  joinedAt: string;
+  totalSpent: number;
+  totalOrders: number;
+  loyaltyPoints: number;
+  tier: "bronze" | "silver" | "gold";
+  avatarSeed: string;
+}
+
+export interface Service {
+  id: string;
+  name: string;
+  type: ServiceType;
+  description: string;
+  unit: "kg" | "item" | "pair" | "set";
+  pricePerUnit: number;
+  turnaroundHours: number;
+}
+
+export interface OrderItem {
+  serviceId: string;
+  serviceName: string;
+  quantity: number;
+  unit: string;
+  pricePerUnit: number;
+}
+
+export interface Order {
+  id: string;
+  code: string;
+  customerId: string;
+  customerName: string;
+  status: OrderStatus;
+  items: OrderItem[];
+  amount: number;
+  createdAt: string;
+  pickupAt?: string;
+  deliveryAt?: string;
+  assignedStaffId?: string;
+  paid: boolean;
+  notes?: string;
+}
+
+export interface Staff {
+  id: string;
+  name: string;
+  role: "manager" | "operator" | "driver" | "cashier";
+  email: string;
+  phone: string;
+  shift: "morning" | "evening" | "full";
+  activeOrders: number;
+  avatarSeed: string;
+}
+
+export interface InventoryItem {
+  id: string;
+  name: string;
+  category: "detergent" | "softener" | "packaging" | "supplies";
+  stock: number;
+  unit: string;
+  reorderAt: number;
+  unitCost: number;
+}
+
+export interface Invoice {
+  id: string;
+  orderId: string;
+  customerName: string;
+  amount: number;
+  issuedAt: string;
+  status: "paid" | "pending" | "overdue";
+}
+
+export interface RevenuePoint {
+  label: string;
+  value: number;
+}
