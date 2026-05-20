@@ -15,6 +15,7 @@ import { KpiCard } from "@/components/kpi-card";
 import { PeriodSwitcher } from "@/components/period-switcher";
 import { StatusPill } from "@/components/status-pill";
 import { Avatar } from "@/components/avatar";
+import { Sparkline } from "@/components/branch-sparkline";
 import {
   formatMoney,
   formatMoney2,
@@ -25,7 +26,7 @@ import {
   revenueByYear,
   staff,
 } from "@/mocks/data";
-import { useBranchScope } from "@/lib/tenant-brand";
+import { useBranchScope, useTenantBrand } from "@/lib/tenant-brand";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({ meta: [{ title: "Dashboard · Sparkle Wash" }] }),
@@ -44,6 +45,7 @@ function AdminDashboard() {
   const data = periodData[period];
   const max = useMemo(() => Math.max(...data.map((d) => d.value)), [data]);
   const { activeBranch, filterByBranch } = useBranchScope();
+  const { tenant, setActiveBranchId } = useTenantBrand();
 
   const scopedOrders = useMemo(() => filterByBranch(orders), [filterByBranch]);
   const scopedStaff = useMemo(() => filterByBranch(staff), [filterByBranch]);
@@ -51,6 +53,17 @@ function AdminDashboard() {
     () => scopedOrders.reduce((s, o) => s + o.amount, 0),
     [scopedOrders],
   );
+
+  // Per-branch sparkline series (deterministic mock based on branch index)
+  const branchSeries = tenant.branches.map((b, idx) => {
+    const base = 800 + idx * 280;
+    return {
+      branch: b,
+      values: Array.from({ length: 7 }, (_, i) => Math.round(base + Math.sin((i + idx) * 1.3) * 220 + i * 35)),
+      revenue: orders.filter((o) => o.branchIndex === idx).reduce((s, o) => s + o.amount, 0),
+      orders: orders.filter((o) => o.branchIndex === idx).length,
+    };
+  });
 
   return (
     <div className="space-y-5">

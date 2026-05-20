@@ -16,7 +16,7 @@ import {
   Wallet,
   X,
 } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { AppShell, type NavItem } from "@/components/app-shell";
 import { BranchSwitcher } from "@/components/branch-switcher";
 import { CommandPalette } from "@/components/command-palette";
@@ -119,5 +119,3 @@ function AdminLayout() {
   );
 }
 
-// silence unused import warning for Link (referenced in case extension adds in-banner link)
-export const _Link = Link;
