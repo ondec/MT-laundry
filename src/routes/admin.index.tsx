@@ -89,6 +89,39 @@ function AdminDashboard() {
         <KpiCard label={activeBranch ? "Branch Staff" : "Total Staff"} value={String(scopedStaff.length)} delta={0.9} icon={<UsersRound className="size-4" />} />
       </div>
 
+      {/* Per-branch sparkline strip */}
+      <div className="rounded-2xl border border-border bg-card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="font-display font-semibold text-lg">Branch performance</h3>
+            <p className="text-xs text-muted-foreground">Revenue trend, last 7 days · click to focus</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {branchSeries.map((b) => {
+            const isActive = activeBranch?.id === b.branch.id;
+            return (
+              <button
+                key={b.branch.id}
+                onClick={() => setActiveBranchId(isActive ? "all" : b.branch.id)}
+                className={`text-left rounded-xl border p-4 transition ${
+                  isActive ? "border-primary bg-primary/5" : "border-border hover:border-foreground/30"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="font-medium text-sm truncate">{b.branch.name}</div>
+                    <div className="text-[11px] text-muted-foreground mt-0.5">{b.orders} orders · {formatMoney2(b.revenue)}</div>
+                  </div>
+                  <Sparkline values={b.values} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+
       {/* Chart + side widgets */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2 rounded-2xl border border-border bg-card p-5">
