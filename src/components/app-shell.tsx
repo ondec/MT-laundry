@@ -1,6 +1,5 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Bell, Calendar, Check, ChevronDown, Search, type LucideIcon } from "lucide-react";
-import { useState } from "react";
+import { Bell, Calendar, Search, type LucideIcon } from "lucide-react";
 import { Avatar } from "@/components/avatar";
 import { cn } from "@/lib/utils";
 import { useTenantBrand } from "@/lib/tenant-brand";
