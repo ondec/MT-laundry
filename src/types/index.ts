@@ -106,6 +106,8 @@ export interface Order {
   assignedStaffId?: string;
   paid: boolean;
   notes?: string;
+  /** Branch slot (0..2) — resolved against the active tenant's branches list. */
+  branchIndex: number;
 }
 
 export interface Staff {
@@ -117,6 +119,7 @@ export interface Staff {
   shift: "morning" | "evening" | "full";
   activeOrders: number;
   avatarSeed: string;
+  branchIndex: number;
 }
 
 export interface InventoryItem {
@@ -127,6 +130,7 @@ export interface InventoryItem {
   unit: string;
   reorderAt: number;
   unitCost: number;
+  branchIndex: number;
 }
 
 export interface Invoice {
