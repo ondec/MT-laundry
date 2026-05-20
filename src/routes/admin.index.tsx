@@ -43,13 +43,23 @@ function AdminDashboard() {
   const [period, setPeriod] = useState<keyof typeof periodData>("Month");
   const data = periodData[period];
   const max = useMemo(() => Math.max(...data.map((d) => d.value)), [data]);
+  const { activeBranch, filterByBranch } = useBranchScope();
+
+  const scopedOrders = useMemo(() => filterByBranch(orders), [filterByBranch]);
+  const scopedStaff = useMemo(() => filterByBranch(staff), [filterByBranch]);
+  const scopedRevenue = useMemo(
+    () => scopedOrders.reduce((s, o) => s + o.amount, 0),
+    [scopedOrders],
+  );
 
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="font-display text-3xl font-semibold tracking-tight">Dashboard</h1>
-          <p className="text-sm text-muted-foreground mt-1">Welcome back, Maretta. Here's how Sparkle Wash is moving today.</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Welcome back, Maretta. {activeBranch ? `Showing ${activeBranch.name}.` : "Showing all branches."}
+          </p>
         </div>
         <PeriodSwitcher
           options={["Day", "Week", "Month", "Year"]}
@@ -60,10 +70,10 @@ function AdminDashboard() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <KpiCard label="Total Revenue" value="$23,902" delta={4.2} dark icon={<DollarSign className="size-4 text-white" />} />
-        <KpiCard label="Active Orders" value="412" delta={1.7} icon={<Package className="size-4" />} />
+        <KpiCard label={activeBranch ? "Branch Revenue" : "Total Revenue"} value={formatMoney(scopedRevenue)} delta={4.2} dark icon={<DollarSign className="size-4 text-white" />} />
+        <KpiCard label="Active Orders" value={String(scopedOrders.length)} delta={1.7} icon={<Package className="size-4" />} />
         <KpiCard label="New Customers" value="148" delta={-2.9} icon={<UserPlus className="size-4" />} />
-        <KpiCard label="Total Staff" value="8" delta={0.9} icon={<UsersRound className="size-4" />} />
+        <KpiCard label={activeBranch ? "Branch Staff" : "Total Staff"} value={String(scopedStaff.length)} delta={0.9} icon={<UsersRound className="size-4" />} />
       </div>
 
       {/* Chart + side widgets */}
