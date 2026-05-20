@@ -1,4 +1,5 @@
 import type {
+  Branch,
   Customer,
   InventoryItem,
   Invoice,
@@ -46,8 +47,6 @@ export const customers: Customer[] = Array.from({ length: 24 }, (_, i) => {
   };
 });
 
-const statuses: OrderStatus[] = ["received", "washing", "drying", "folding", "ready", "delivered"];
-
 export const orders: Order[] = Array.from({ length: 38 }, (_, i) => {
   const cust = customers[i % customers.length];
   const svc = services[i % services.length];
@@ -71,28 +70,29 @@ export const orders: Order[] = Array.from({ length: 38 }, (_, i) => {
     deliveryAt: new Date(new Date(created).getTime() + svc.turnaroundHours * 3600000).toISOString(),
     paid: status !== "received",
     notes: i % 5 === 0 ? "Handle with care — silk." : undefined,
+    branchIndex: i % 3,
   };
 });
 
 export const staff: Staff[] = [
-  { id: "stf-1", name: "Maretta Daniel", role: "manager", email: "maretta@sparkle.co", phone: "+1 555-0900", shift: "full", activeOrders: 12, avatarSeed: "Maretta" },
-  { id: "stf-2", name: "Jonas Bauer", role: "operator", email: "jonas@sparkle.co", phone: "+1 555-0901", shift: "morning", activeOrders: 6, avatarSeed: "Jonas" },
-  { id: "stf-3", name: "Amina Hassan", role: "operator", email: "amina@sparkle.co", phone: "+1 555-0902", shift: "morning", activeOrders: 8, avatarSeed: "Amina" },
-  { id: "stf-4", name: "Theo Romano", role: "operator", email: "theo@sparkle.co", phone: "+1 555-0903", shift: "evening", activeOrders: 5, avatarSeed: "Theo" },
-  { id: "stf-5", name: "Leo Silva", role: "driver", email: "leo@sparkle.co", phone: "+1 555-0904", shift: "morning", activeOrders: 4, avatarSeed: "Leo" },
-  { id: "stf-6", name: "Iris Park", role: "driver", email: "iris@sparkle.co", phone: "+1 555-0905", shift: "evening", activeOrders: 3, avatarSeed: "Iris" },
-  { id: "stf-7", name: "Yusuf Adeyemi", role: "cashier", email: "yusuf@sparkle.co", phone: "+1 555-0906", shift: "full", activeOrders: 0, avatarSeed: "Yusuf" },
-  { id: "stf-8", name: "Nora Klein", role: "cashier", email: "nora@sparkle.co", phone: "+1 555-0907", shift: "evening", activeOrders: 0, avatarSeed: "Nora" },
+  { id: "stf-1", name: "Maretta Daniel", role: "manager", email: "maretta@sparkle.co", phone: "+1 555-0900", shift: "full", activeOrders: 12, avatarSeed: "Maretta", branchIndex: 0 },
+  { id: "stf-2", name: "Jonas Bauer", role: "operator", email: "jonas@sparkle.co", phone: "+1 555-0901", shift: "morning", activeOrders: 6, avatarSeed: "Jonas", branchIndex: 0 },
+  { id: "stf-3", name: "Amina Hassan", role: "operator", email: "amina@sparkle.co", phone: "+1 555-0902", shift: "morning", activeOrders: 8, avatarSeed: "Amina", branchIndex: 1 },
+  { id: "stf-4", name: "Theo Romano", role: "operator", email: "theo@sparkle.co", phone: "+1 555-0903", shift: "evening", activeOrders: 5, avatarSeed: "Theo", branchIndex: 2 },
+  { id: "stf-5", name: "Leo Silva", role: "driver", email: "leo@sparkle.co", phone: "+1 555-0904", shift: "morning", activeOrders: 4, avatarSeed: "Leo", branchIndex: 1 },
+  { id: "stf-6", name: "Iris Park", role: "driver", email: "iris@sparkle.co", phone: "+1 555-0905", shift: "evening", activeOrders: 3, avatarSeed: "Iris", branchIndex: 0 },
+  { id: "stf-7", name: "Yusuf Adeyemi", role: "cashier", email: "yusuf@sparkle.co", phone: "+1 555-0906", shift: "full", activeOrders: 0, avatarSeed: "Yusuf", branchIndex: 2 },
+  { id: "stf-8", name: "Nora Klein", role: "cashier", email: "nora@sparkle.co", phone: "+1 555-0907", shift: "evening", activeOrders: 0, avatarSeed: "Nora", branchIndex: 1 },
 ];
 
 export const inventory: InventoryItem[] = [
-  { id: "inv-1", name: "Eco Detergent (5L)", category: "detergent", stock: 24, unit: "bottle", reorderAt: 10, unitCost: 18 },
-  { id: "inv-2", name: "Wool Wash", category: "detergent", stock: 8, unit: "bottle", reorderAt: 6, unitCost: 14 },
-  { id: "inv-3", name: "Lavender Softener", category: "softener", stock: 15, unit: "bottle", reorderAt: 8, unitCost: 9 },
-  { id: "inv-4", name: "Hangers (pk 50)", category: "supplies", stock: 6, unit: "pack", reorderAt: 5, unitCost: 12 },
-  { id: "inv-5", name: "Garment Bags", category: "packaging", stock: 320, unit: "bag", reorderAt: 100, unitCost: 0.25 },
-  { id: "inv-6", name: "Stain Remover", category: "detergent", stock: 4, unit: "bottle", reorderAt: 6, unitCost: 7 },
-  { id: "inv-7", name: "Receipt Paper", category: "supplies", stock: 22, unit: "roll", reorderAt: 10, unitCost: 2 },
+  { id: "inv-1", name: "Eco Detergent (5L)", category: "detergent", stock: 24, unit: "bottle", reorderAt: 10, unitCost: 18, branchIndex: 0 },
+  { id: "inv-2", name: "Wool Wash", category: "detergent", stock: 8, unit: "bottle", reorderAt: 6, unitCost: 14, branchIndex: 0 },
+  { id: "inv-3", name: "Lavender Softener", category: "softener", stock: 15, unit: "bottle", reorderAt: 8, unitCost: 9, branchIndex: 1 },
+  { id: "inv-4", name: "Hangers (pk 50)", category: "supplies", stock: 6, unit: "pack", reorderAt: 5, unitCost: 12, branchIndex: 1 },
+  { id: "inv-5", name: "Garment Bags", category: "packaging", stock: 320, unit: "bag", reorderAt: 100, unitCost: 0.25, branchIndex: 2 },
+  { id: "inv-6", name: "Stain Remover", category: "detergent", stock: 4, unit: "bottle", reorderAt: 6, unitCost: 7, branchIndex: 2 },
+  { id: "inv-7", name: "Receipt Paper", category: "supplies", stock: 22, unit: "roll", reorderAt: 10, unitCost: 2, branchIndex: 0 },
 ];
 
 export const invoices: Invoice[] = orders.slice(0, 14).map((o, i) => ({
@@ -121,7 +121,49 @@ export const revenueByYear: RevenuePoint[] = [
   { label: "2023", value: 95000 }, { label: "2024", value: 128000 }, { label: "2025", value: 147000 },
 ];
 
-export const tenants: Tenant[] = [
+/**
+ * Branch slot templates — each tenant gets three branches built from these
+ * templates plus city-specific naming. The slot index lines up with the
+ * `branchIndex` stamped on orders, staff and inventory so the same record
+ * map naturally onto whichever tenant is being demoed.
+ */
+const branchTemplates: {
+  hours: string;
+  managerName: string;
+  isDefault?: boolean;
+  serviceOverrides: Record<string, { pricePerUnit?: number; disabled?: boolean }>;
+}[] = [
+  { hours: "Mon–Sat · 7am–9pm", managerName: "Maretta Daniel", isDefault: true, serviceOverrides: {} },
+  { hours: "Mon–Sun · 8am–8pm", managerName: "Amina Hassan", serviceOverrides: { "svc-2": { pricePerUnit: 10 }, "svc-4": { pricePerUnit: 7.5 } } },
+  { hours: "Tue–Sun · 9am–7pm", managerName: "Theo Romano", serviceOverrides: { "svc-5": { disabled: true }, "svc-1": { pricePerUnit: 3.95 } } },
+];
+
+const branchNamesByCity: Record<string, string[]> = {
+  "Brooklyn, NY": ["Williamsburg", "Park Slope", "DUMBO"],
+  "Austin, TX": ["South Congress", "East Austin", "Domain"],
+  "Seattle, WA": ["Capitol Hill", "Ballard", "Fremont"],
+  "Denver, CO": ["LoDo", "Highlands", "Cherry Creek"],
+  "Chicago, IL": ["The Loop", "Wicker Park", "Lincoln Park"],
+  "Miami, FL": ["Brickell", "Wynwood", "South Beach"],
+  "Portland, OR": ["Pearl District", "Hawthorne", "Alberta"],
+};
+
+function buildBranches(tenantId: string, city: string): Branch[] {
+  const names = branchNamesByCity[city] ?? ["Downtown", "Uptown", "Riverside"];
+  return branchTemplates.map((tpl, i) => ({
+    id: `${tenantId}-b${i + 1}`,
+    tenantId,
+    name: names[i],
+    address: `${100 + i * 47} ${streets[i % streets.length]} Ave, ${city}`,
+    phone: `+1 555-1${String(100 + i).padStart(3, "0")}`,
+    hours: tpl.hours,
+    managerName: tpl.managerName,
+    isDefault: tpl.isDefault,
+    serviceOverrides: tpl.serviceOverrides,
+  }));
+}
+
+const baseTenants: Omit<Tenant, "branches">[] = [
   { id: "t-1", name: "Sparkle Wash", plan: "scale", status: "active", city: "Brooklyn, NY", ownerName: "Maretta Daniel", ownerEmail: "maretta@sparkle.co", createdAt: "2024-02-12", monthlyOrders: 412, monthlyRevenue: 23902,
     brand: { logoInitial: "SW", accent: "#2563eb", accentForeground: "#ffffff", customerAppName: "Sparkle", tagline: "Brooklyn's everyday clean", subdomain: "sparkle" } },
   { id: "t-2", name: "Foam & Fold", plan: "growth", status: "active", city: "Austin, TX", ownerName: "Carlos Vega", ownerEmail: "carlos@foamfold.com", createdAt: "2024-05-04", monthlyOrders: 268, monthlyRevenue: 14820,
@@ -138,8 +180,30 @@ export const tenants: Tenant[] = [
     brand: { logoInitial: "LL", accent: "#d97706", accentForeground: "#ffffff", customerAppName: "Linen", tagline: "Portland fabric care", subdomain: "linenlab" } },
 ];
 
+export const tenants: Tenant[] = baseTenants.map((t) => ({
+  ...t,
+  branches: buildBranches(t.id, t.city),
+}));
+
 export const currentTenant = tenants[0];
 export const currentCustomer = customers[1];
+
+/**
+ * Resolve the effective price-list for the given branch by merging the global
+ * service catalog with the branch's overrides. When `branch` is null, the
+ * untouched tenant-wide catalog is returned.
+ */
+export function getBranchServices(branch: Branch | null): Service[] {
+  if (!branch) return services;
+  return services
+    .map((s) => {
+      const ov = branch.serviceOverrides[s.id];
+      if (!ov) return s;
+      if (ov.disabled) return null;
+      return ov.pricePerUnit != null ? { ...s, pricePerUnit: ov.pricePerUnit } : s;
+    })
+    .filter((s): s is Service => s !== null);
+}
 
 export function formatMoney(n: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
