@@ -9,6 +9,21 @@ export type OrderStatus =
 
 export type ServiceType = "wash_fold" | "dry_clean" | "ironing" | "premium" | "shoes" | "bedding";
 
+export interface TenantBrand {
+  /** Two-letter monogram shown in the sidebar logo tile. */
+  logoInitial: string;
+  /** Hex accent color used for buttons, focus rings and chart highlights. */
+  accent: string;
+  /** Hex color used for text/icons on top of the accent. Defaults to white. */
+  accentForeground: string;
+  /** Public-facing name of the customer app (may differ from tenant name). */
+  customerAppName: string;
+  /** Short tagline shown beneath the logo. */
+  tagline: string;
+  /** Subdomain placeholder e.g. "sparkle" → sparkle.sudsly.app */
+  subdomain: string;
+}
+
 export interface Tenant {
   id: string;
   name: string;
@@ -20,6 +35,7 @@ export interface Tenant {
   createdAt: string;
   monthlyOrders: number;
   monthlyRevenue: number;
+  brand: TenantBrand;
 }
 
 export interface Customer {
