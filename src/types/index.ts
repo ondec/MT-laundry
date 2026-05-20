@@ -24,6 +24,27 @@ export interface TenantBrand {
   subdomain: string;
 }
 
+export interface BranchServiceOverride {
+  /** Overrides the tenant-wide price for this service at this branch. */
+  pricePerUnit?: number;
+  /** When true, the branch does not offer this service. */
+  disabled?: boolean;
+}
+
+export interface Branch {
+  id: string;
+  tenantId: string;
+  name: string;
+  address: string;
+  phone: string;
+  /** Human readable opening hours, e.g. "Mon–Sat 8am–8pm". */
+  hours: string;
+  managerName: string;
+  isDefault?: boolean;
+  /** Per-service price/availability overrides, keyed by service id. */
+  serviceOverrides: Record<string, BranchServiceOverride>;
+}
+
 export interface Tenant {
   id: string;
   name: string;
@@ -36,6 +57,7 @@ export interface Tenant {
   monthlyOrders: number;
   monthlyRevenue: number;
   brand: TenantBrand;
+  branches: Branch[];
 }
 
 export interface Customer {
@@ -84,6 +106,8 @@ export interface Order {
   assignedStaffId?: string;
   paid: boolean;
   notes?: string;
+  /** Branch slot (0..2) — resolved against the active tenant's branches list. */
+  branchIndex: number;
 }
 
 export interface Staff {
@@ -95,6 +119,7 @@ export interface Staff {
   shift: "morning" | "evening" | "full";
   activeOrders: number;
   avatarSeed: string;
+  branchIndex: number;
 }
 
 export interface InventoryItem {
@@ -105,6 +130,7 @@ export interface InventoryItem {
   unit: string;
   reorderAt: number;
   unitCost: number;
+  branchIndex: number;
 }
 
 export interface Invoice {

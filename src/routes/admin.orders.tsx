@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { StatusPill } from "@/components/status-pill";
 import { Avatar } from "@/components/avatar";
 import { formatDateTime, formatMoney2, orders } from "@/mocks/data";
+import { useBranchScope } from "@/lib/tenant-brand";
 import type { OrderStatus } from "@/types";
 
 export const Route = createFileRoute("/admin/orders")({
@@ -17,20 +18,21 @@ const filters: (OrderStatus | "all")[] = ["all", "received", "washing", "drying"
 function OrdersPage() {
   const [filter, setFilter] = useState<(typeof filters)[number]>("all");
   const [q, setQ] = useState("");
+  const { filterByBranch, activeBranch } = useBranchScope();
 
   const filtered = useMemo(() => {
-    return orders.filter((o) => {
+    return filterByBranch(orders).filter((o) => {
       if (filter !== "all" && o.status !== filter) return false;
       if (q && !o.customerName.toLowerCase().includes(q.toLowerCase()) && !o.code.toLowerCase().includes(q.toLowerCase())) return false;
       return true;
     });
-  }, [filter, q]);
+  }, [filter, q, filterByBranch]);
 
   return (
     <div className="space-y-5">
       <PageHeader
         title="Orders"
-        subtitle={`${filtered.length} tickets`}
+        subtitle={`${filtered.length} tickets${activeBranch ? ` · ${activeBranch.name}` : " · all branches"}`}
         actions={
           <>
             <button className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-sm hover:bg-muted">

@@ -3,6 +3,7 @@ import { MapPin, Truck } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Avatar } from "@/components/avatar";
 import { formatDateTime, orders } from "@/mocks/data";
+import { STAFF_BRANCH_INDEX } from "@/lib/staff-context";
 
 export const Route = createFileRoute("/staff/pickups")({
   head: () => ({ meta: [{ title: "Pickups & Delivery · Operator" }] }),
@@ -10,8 +11,9 @@ export const Route = createFileRoute("/staff/pickups")({
 });
 
 function PickupsPage() {
-  const pickups = orders.filter((o) => o.status === "received").slice(0, 6);
-  const deliveries = orders.filter((o) => o.status === "ready").slice(0, 6);
+  const scoped = orders.filter((o) => o.branchIndex === STAFF_BRANCH_INDEX);
+  const pickups = scoped.filter((o) => o.status === "received").slice(0, 6);
+  const deliveries = scoped.filter((o) => o.status === "ready").slice(0, 6);
   return (
     <div className="space-y-5">
       <PageHeader title="Pickups & Delivery" subtitle="Your route for the day." />

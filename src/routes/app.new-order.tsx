@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Check, Clock, Minus, Plus } from "lucide-react";
+import { Building2, Check, Clock, Minus, Plus } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
-import { formatMoney2, services } from "@/mocks/data";
+import { formatMoney2, getBranchServices } from "@/mocks/data";
+import { useTenantBrand } from "@/lib/tenant-brand";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/new-order")({
   head: () => ({ meta: [{ title: "New order · Sparkle" }] }),
@@ -12,12 +14,19 @@ export const Route = createFileRoute("/app/new-order")({
 const slots = ["Today, 4:00 – 6:00 PM", "Today, 6:00 – 8:00 PM", "Tomorrow, 9:00 – 11:00 AM", "Tomorrow, 1:00 – 3:00 PM"];
 
 function NewOrder() {
+  const { tenant } = useTenantBrand();
+  const [branchId, setBranchId] = useState<string>(
+    tenant.branches.find((b) => b.isDefault)?.id ?? tenant.branches[0].id,
+  );
+  const branch = tenant.branches.find((b) => b.id === branchId) ?? tenant.branches[0];
+  const services = useMemo(() => getBranchServices(branch), [branch]);
+
   const [qty, setQty] = useState<Record<string, number>>({});
   const [slot, setSlot] = useState(slots[0]);
 
   const total = useMemo(
     () => services.reduce((s, svc) => s + (qty[svc.id] ?? 0) * svc.pricePerUnit, 0),
-    [qty],
+    [qty, services],
   );
   const items = services.filter((s) => (qty[s.id] ?? 0) > 0);
 
@@ -26,12 +35,43 @@ function NewOrder() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Place a new order" subtitle="Pick your services, choose a slot, you're done." />
+      <PageHeader title="Place a new order" subtitle="Pick a branch, pick your services, choose a slot — done." />
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-4">
         <div className="space-y-4">
           <div className="rounded-2xl border border-border bg-card p-5">
-            <h3 className="font-display font-semibold mb-3">1. Choose services</h3>
+            <h3 className="font-display font-semibold mb-3">1. Choose a branch</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {tenant.branches.map((b) => {
+                const active = b.id === branch.id;
+                return (
+                  <button
+                    key={b.id}
+                    onClick={() => {
+                      setBranchId(b.id);
+                      // Reset qty for any service that may no longer exist at this branch.
+                      setQty({});
+                    }}
+                    className={cn(
+                      "text-left rounded-xl border px-3 py-3 text-sm transition",
+                      active ? "border-primary bg-primary/5" : "border-border hover:border-foreground/30",
+                    )}
+                  >
+                    <div className="flex items-center gap-2 font-medium">
+                      <Building2 className="size-3.5 text-muted-foreground" />
+                      {b.name}
+                      {active && <Check className="size-3.5 text-primary ml-auto" />}
+                    </div>
+                    <div className="text-[11px] text-muted-foreground mt-1 truncate">{b.address}</div>
+                    <div className="text-[11px] text-muted-foreground mt-0.5">{b.hours}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-border bg-card p-5">
+            <h3 className="font-display font-semibold mb-3">2. Choose services</h3>
             <div className="divide-y divide-border">
               {services.map((s) => (
                 <div key={s.id} className="py-3 flex items-center gap-3">
@@ -53,7 +93,7 @@ function NewOrder() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5">
-            <h3 className="font-display font-semibold mb-3">2. Pickup slot</h3>
+            <h3 className="font-display font-semibold mb-3">3. Pickup slot</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {slots.map((sl) => (
                 <button
@@ -75,6 +115,10 @@ function NewOrder() {
 
         <aside className="rounded-2xl border border-border bg-card p-5 h-fit lg:sticky lg:top-4">
           <h3 className="font-display font-semibold">Order summary</h3>
+          <div className="mt-3 rounded-xl bg-muted/50 px-3 py-2 text-xs">
+            <div className="flex items-center gap-1.5 text-muted-foreground"><Building2 className="size-3.5" /> Branch</div>
+            <div className="font-medium mt-0.5">{branch.name}</div>
+          </div>
           <div className="mt-4 space-y-2 text-sm min-h-[60px]">
             {items.length === 0 && <div className="text-muted-foreground text-xs">Add a service to get started.</div>}
             {items.map((s) => (
