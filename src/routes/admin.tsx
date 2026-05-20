@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   BarChart3,
   Boxes,
+  Building2,
   LayoutDashboard,
   Palette,
   Receipt,
@@ -13,6 +14,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { AppShell, type NavItem } from "@/components/app-shell";
+import { BranchSwitcher } from "@/components/branch-switcher";
 import { TenantBrandProvider, useTenantBrand } from "@/lib/tenant-brand";
 
 export const Route = createFileRoute("/admin")({
@@ -26,6 +28,7 @@ const nav: NavItem[] = [
   { to: "/admin/services", label: "Services", icon: Sparkles },
   { to: "/admin/inventory", label: "Inventory", icon: Boxes },
   { to: "/admin/staff", label: "Staff", icon: UsersRound },
+  { to: "/admin/branches", label: "Branches", icon: Building2 },
   { to: "/admin/finance", label: "Finance", icon: Wallet },
   { to: "/admin/reports", label: "Reports", icon: BarChart3 },
   { to: "/admin/invoices", label: "Invoices", icon: Receipt },
@@ -40,6 +43,7 @@ function AdminLayoutInner() {
       nav={nav}
       userName={tenant.ownerName}
       userRole="Owner"
+      topBar={<BranchSwitcher />}
       promo={{
         title: "Upgrade to Scale",
         body: "Unlock unlimited routes, advanced reports and a branded customer app.",
