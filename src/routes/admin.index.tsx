@@ -23,7 +23,9 @@ import {
   revenueByMonth,
   revenueByWeek,
   revenueByYear,
+  staff,
 } from "@/mocks/data";
+import { useBranchScope } from "@/lib/tenant-brand";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({ meta: [{ title: "Dashboard · Sparkle Wash" }] }),
