@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 
 export const Route = createFileRoute("/super-admin/plans")({
-  head: () => ({ meta: [{ title: "Plans · Sudsly HQ" }] }),
+  head: () => ({ meta: [{ title: "Plans · MT Laundry HQ" }] }),
   component: Plans,
 });
 

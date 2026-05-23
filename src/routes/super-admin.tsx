@@ -17,7 +17,7 @@ const nav: NavItem[] = [
 function SuperLayout() {
   return (
     <AppShell
-      brand={{ name: "Sudsly HQ", tagline: "Platform admin", logoInitial: "S" }}
+      brand={{ name: "MT Laundry HQ", tagline: "Platform admin", logoInitial: "S" }}
       nav={nav}
       userName="Alex Vega"
       userRole="Platform admin"
