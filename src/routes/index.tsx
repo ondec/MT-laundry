@@ -57,9 +57,11 @@ function Landing() {
             </div>
             <div className="font-display text-lg font-semibold tracking-tight">MT Laundry</div>
           </div>
-          <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="size-1.5 rounded-full bg-success" />
-            Demo workspace · v0.1
+          <div className="flex items-center gap-3 text-xs">
+            <Link to="/login" className="text-muted-foreground hover:text-foreground">Sign in</Link>
+            <Link to="/signup" className="inline-flex items-center rounded-full bg-ink text-ink-foreground px-3 py-1.5 hover:bg-ink/90">
+              Get started
+            </Link>
           </div>
         </header>
 
