@@ -4,7 +4,7 @@ import { ArrowUpRight, Building2, ShieldCheck, Sparkles, Truck, User } from "luc
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sudsly — Pick a workspace" },
+      { title: "MT Laundry — Pick a workspace" },
       { name: "description", content: "Four roles, one operating system for laundromats. Step into the experience built for you." },
     ],
   }),
@@ -55,7 +55,7 @@ function Landing() {
             <div className="size-8 rounded-xl bg-ink text-ink-foreground grid place-items-center">
               <Sparkles className="size-4" />
             </div>
-            <div className="font-display text-lg font-semibold tracking-tight">Sudsly</div>
+            <div className="font-display text-lg font-semibold tracking-tight">MT Laundry</div>
           </div>
           <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
             <span className="size-1.5 rounded-full bg-success" />
@@ -73,7 +73,7 @@ function Landing() {
             <span className="text-muted-foreground">Four very different days.</span>
           </h1>
           <p className="mt-5 text-base text-muted-foreground max-w-xl">
-            Sudsly powers every seat in a modern laundromat — from the owner watching revenue, to the
+            MT Laundry powers every seat in a modern laundromat — from the owner watching revenue, to the
             operator folding a comforter, to the customer tracking their order from the couch.
           </p>
         </div>

@@ -7,7 +7,7 @@ import { StatusPill } from "@/components/status-pill";
 import { formatMoney, formatMoney2, tenants } from "@/mocks/data";
 
 export const Route = createFileRoute("/super-admin/")({
-  head: () => ({ meta: [{ title: "Overview · Sudsly HQ" }] }),
+  head: () => ({ meta: [{ title: "Overview · MT Laundry HQ" }] }),
   component: SuperOverview,
 });
 
@@ -19,7 +19,7 @@ const mrr = [
 function SuperOverview() {
   return (
     <div className="space-y-5">
-      <PageHeader title="Platform overview" subtitle="How Sudsly itself is doing." />
+      <PageHeader title="Platform overview" subtitle="How MT Laundry itself is doing." />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="MRR" value={formatMoney(64000)} delta={9.4} dark icon={<DollarSign className="size-4 text-white" />} />

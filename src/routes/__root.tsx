@@ -73,10 +73,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Sudsly — Multi-tenant Laundry Operating System" },
+      { title: "MT Laundry — Multi-tenant Laundry Operating System" },
       { name: "description", content: "Run laundromats end-to-end: orders, staff, customers, billing and analytics in one elegant workspace." },
-      { name: "author", content: "Sudsly" },
-      { property: "og:title", content: "Sudsly — Laundry Operating System" },
+      { name: "author", content: "MT Laundry" },
+      { property: "og:title", content: "MT Laundry — Laundry Operating System" },
       { property: "og:description", content: "End-to-end laundry management for owners, staff and customers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

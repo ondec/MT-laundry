@@ -4,7 +4,7 @@ import { StatusPill } from "@/components/status-pill";
 import { formatDate, formatMoney2, tenants } from "@/mocks/data";
 
 export const Route = createFileRoute("/super-admin/billing")({
-  head: () => ({ meta: [{ title: "Billing · Sudsly HQ" }] }),
+  head: () => ({ meta: [{ title: "Billing · MT Laundry HQ" }] }),
   component: Billing,
 });
 

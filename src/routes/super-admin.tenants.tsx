@@ -6,7 +6,7 @@ import { formatDate, formatMoney2, tenants } from "@/mocks/data";
 import type { Tenant } from "@/types";
 
 export const Route = createFileRoute("/super-admin/tenants")({
-  head: () => ({ meta: [{ title: "Tenants · Sudsly HQ" }] }),
+  head: () => ({ meta: [{ title: "Tenants · MT Laundry HQ" }] }),
   component: TenantsPage,
 });
 
