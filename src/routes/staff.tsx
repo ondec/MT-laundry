@@ -21,7 +21,7 @@ function StaffLayoutInner() {
   return (
     <AppShell
       nav={nav}
-      userName="Jonas Bauer"
+      userName="Kwame Boateng"
       userRole={`Operator · ${branch.name}`}
       searchPlaceholder="Search a ticket #"
       showDateRange={false}

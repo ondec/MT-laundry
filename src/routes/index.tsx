@@ -113,7 +113,7 @@ function Landing() {
 
         <footer className="mt-16 pt-8 border-t border-border flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
           <div>Frontend prototype · mock data, no backend yet.</div>
-          <div>Demo tenant: <span className="text-foreground font-medium">Sparkle Wash · Brooklyn, NY</span></div>
+          <div>Demo tenant: <span className="text-foreground font-medium">Sparkle Wash · Accra, Ghana</span></div>
         </footer>
       </div>
     </div>

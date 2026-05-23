@@ -62,10 +62,10 @@ export function AuthShell({ eyebrow, title, subtitle, children, footer }: AuthSh
               "We replaced four tools, two spreadsheets and one whiteboard with MT Laundry."
             </div>
             <div className="mt-6 flex items-center gap-3">
-              <div className="size-9 rounded-full bg-white/10 grid place-items-center text-sm font-medium">SW</div>
+              <div className="size-9 rounded-full bg-white/10 grid place-items-center text-sm font-medium">AM</div>
               <div className="text-sm">
-                <div className="font-medium">Maya Ortiz</div>
-                <div className="text-ink-foreground/60">Owner · Sparkle Wash, Brooklyn</div>
+                <div className="font-medium">Akosua Mensah</div>
+                <div className="text-ink-foreground/60">Owner · Sparkle Wash, Accra</div>
               </div>
             </div>
           </div>

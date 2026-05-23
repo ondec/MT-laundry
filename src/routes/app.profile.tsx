@@ -9,8 +9,8 @@ export const Route = createFileRoute("/app/profile")({
 });
 
 const addresses = [
-  { id: "a1", label: "Home", icon: Home, line: "218 Oak St, Apt 2", city: "Brooklyn, NY 11211", isDefault: true },
-  { id: "a2", label: "Work", icon: Briefcase, line: "55 Pearl St, Floor 14", city: "Brooklyn, NY 11201" },
+  { id: "a1", label: "Home", icon: Home, line: "24 Oxford St, Apt 2", city: "Osu, Accra", isDefault: true },
+  { id: "a2", label: "Work", icon: Briefcase, line: "55 Independence Ave, Floor 14", city: "Ridge, Accra" },
 ];
 
 const cards = [
@@ -24,9 +24,9 @@ function Profile() {
       <PageHeader title="Profile" subtitle="Your details, addresses and payment methods." />
 
       <div className="rounded-2xl border border-border bg-card p-5 space-y-2 text-sm">
-        <Row label="Name" value="Liam Daniel" />
-        <Row label="Email" value="liam.daniel@mail.com" />
-        <Row label="Phone" value="+1 555-0101" />
+        <Row label="Name" value="Akosua Mensah" />
+        <Row label="Email" value="akosua.mensah@mail.gh" />
+        <Row label="Phone" value="+233 24 555 0101" />
       </div>
 
       <Section
