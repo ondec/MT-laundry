@@ -19,14 +19,14 @@ type Entry = {
 };
 
 const entries: Entry[] = [
-  { id: "a1", who: "Maretta Daniel", action: "Advanced ticket", target: "#SW34571", branch: "Williamsburg", at: "2m ago", kind: "status" },
-  { id: "a2", who: "Jonas Bauer", action: "Updated price", target: "Dry Cleaning · Park Slope", branch: "Park Slope", at: "11m ago", kind: "update" },
-  { id: "a3", who: "Amina Hassan", action: "Created order", target: "#SW34604 · Nora Klein", branch: "Park Slope", at: "34m ago", kind: "create" },
-  { id: "a4", who: "Maretta Daniel", action: "Invited staff", target: "leo@sparkle.co (driver)", branch: "DUMBO", at: "1h ago", kind: "auth" },
-  { id: "a5", who: "Theo Romano", action: "Deleted draft order", target: "#SW34588", branch: "DUMBO", at: "2h ago", kind: "delete" },
-  { id: "a6", who: "Maretta Daniel", action: "Changed branch hours", target: "Williamsburg · Mon–Sat 7a–9p", branch: "Williamsburg", at: "5h ago", kind: "update" },
-  { id: "a7", who: "Yusuf Adeyemi", action: "Refunded order", target: "#SW34561 · $42.50", branch: "DUMBO", at: "Yesterday", kind: "update" },
-  { id: "a8", who: "Maretta Daniel", action: "Updated branding", target: "Accent color #2563eb → #1d4ed8", branch: "All branches", at: "Yesterday", kind: "update" },
+  { id: "a1", who: "Akosua Mensah", action: "Advanced ticket", target: "#SW34571", branch: "Osu", at: "2m ago", kind: "status" },
+  { id: "a2", who: "Kwame Boateng", action: "Updated price", target: "Dry Cleaning · East Legon", branch: "East Legon", at: "11m ago", kind: "update" },
+  { id: "a3", who: "Grace Owusu", action: "Created order", target: "#SW34604 · Linda Appiah", branch: "East Legon", at: "34m ago", kind: "create" },
+  { id: "a4", who: "Akosua Mensah", action: "Invited staff", target: "yaw@sparkle.gh (driver)", branch: "Spintex", at: "1h ago", kind: "auth" },
+  { id: "a5", who: "Joseph Adjei", action: "Deleted draft order", target: "#SW34588", branch: "Spintex", at: "2h ago", kind: "delete" },
+  { id: "a6", who: "Akosua Mensah", action: "Changed branch hours", target: "Osu · Mon–Sat 7a–9p", branch: "Osu", at: "5h ago", kind: "update" },
+  { id: "a7", who: "Samuel Ofori", action: "Refunded order", target: "#SW34561 · GHS 185.00", branch: "Spintex", at: "Yesterday", kind: "update" },
+  { id: "a8", who: "Akosua Mensah", action: "Updated branding", target: "Accent color #2563eb → #1d4ed8", branch: "All branches", at: "Yesterday", kind: "update" },
 ];
 
 const iconFor = (k: Entry["kind"]) => {

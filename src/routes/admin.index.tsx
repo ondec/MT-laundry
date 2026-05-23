@@ -71,7 +71,7 @@ function AdminDashboard() {
         <div>
           <h1 className="font-display text-3xl font-semibold tracking-tight">Dashboard</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Welcome back, Maretta. {activeBranch ? `Showing ${activeBranch.name}.` : "Showing all branches."}
+            Welcome back, Akosua. {activeBranch ? `Showing ${activeBranch.name}.` : "Showing all branches."}
           </p>
         </div>
         <PeriodSwitcher

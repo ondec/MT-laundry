@@ -14,17 +14,17 @@ function SettingsPage() {
         <Section title="Workspace">
           <Field label="Workspace name" value="Sparkle Wash" />
           <Field label="Industry" value="Retail laundromat" />
-          <Field label="Timezone" value="America/New_York" />
+          <Field label="Timezone" value="Africa/Accra" />
         </Section>
         <Section title="Owner">
-          <Field label="Name" value="Maretta Daniel" />
-          <Field label="Email" value="maretta@sparkle.co" />
-          <Field label="Phone" value="+1 555-0900" />
+          <Field label="Name" value="Akosua Mensah" />
+          <Field label="Email" value="akosua@sparkle.gh" />
+          <Field label="Phone" value="+233 24 555 0900" />
         </Section>
         <Section title="Plan">
           <div className="rounded-xl bg-ink text-ink-foreground p-4">
             <div className="text-xs text-ink-foreground/70">Current plan</div>
-            <div className="font-display text-2xl font-semibold mt-1">Scale · $149/mo</div>
+            <div className="font-display text-2xl font-semibold mt-1">Scale · GHS 1,899/mo</div>
             <p className="text-xs text-ink-foreground/70 mt-2">Unlimited orders, advanced reports, multi-location, branded customer app.</p>
             <button className="mt-3 inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-medium hover:opacity-90">
               Manage plan
