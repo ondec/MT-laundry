@@ -61,15 +61,16 @@ export function MobileAppShell({ nav, userName, userRole, promo }: MobileAppShel
           <Avatar seed={userName} size={36} />
         </header>
 
-        <main className="flex-1 min-w-0 px-4 pt-4 pb-[calc(5.5rem+env(safe-area-inset-bottom))]">
+        <main className="flex-1 min-w-0 px-4 pt-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))]">
           <Outlet />
         </main>
 
+        {/* Floating pill nav */}
         <nav
-          className="fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur-md"
-          style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+          className="fixed inset-x-0 z-40 flex justify-center pointer-events-none px-4"
+          style={{ bottom: "calc(env(safe-area-inset-bottom) + 1rem)" }}
         >
-          <ul className="grid grid-cols-5">
+          <ul className="pointer-events-auto inline-flex items-center gap-1 rounded-full bg-ink text-ink-foreground/70 px-2 py-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.45)] backdrop-blur-md">
             {nav.map((item) => {
               const active = item.exact
                 ? pathname === item.to
@@ -79,20 +80,15 @@ export function MobileAppShell({ nav, userName, userRole, promo }: MobileAppShel
                 <li key={item.to}>
                   <Link
                     to={item.to}
+                    aria-label={item.label}
                     className={cn(
-                      "flex flex-col items-center justify-center gap-1 py-2.5 text-[10px] font-medium transition-colors",
-                      active ? "text-foreground" : "text-muted-foreground",
+                      "grid place-items-center size-11 rounded-full transition-all",
+                      active
+                        ? "bg-background text-foreground shadow-sm scale-105"
+                        : "text-ink-foreground/60 hover:text-ink-foreground",
                     )}
                   >
-                    <span
-                      className={cn(
-                        "grid place-items-center size-9 rounded-full transition-colors",
-                        active && "bg-ink text-ink-foreground",
-                      )}
-                    >
-                      <Icon className="size-[18px]" />
-                    </span>
-                    <span className="truncate max-w-[64px]">{item.label}</span>
+                    <Icon className="size-[18px]" />
                   </Link>
                 </li>
               );
